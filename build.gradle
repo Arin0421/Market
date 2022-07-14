@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.shop'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '1.8'
 
 configurations {
     compileOnly {
@@ -23,6 +23,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.0.0'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-java8time:3.0.4.RELEASE'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
@@ -32,8 +33,9 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-}
 
-tasks.named('test') {
+}
+//tasks.named('test')
+ test{
     useJUnitPlatform()
 }
