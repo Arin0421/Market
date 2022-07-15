@@ -25,7 +25,7 @@
                 <input type="password" name="password" id="password" class="form-control" placeholder="비밀번호 입력">
             </div>
 
-            <p th:if="${error}"  class="fieldError" th:text="${errorMessage}">Incorrect data</p>
+            <p th:if="${longinErrorMsg}"  class="fieldError" th:text="${longinErrorMsg}">Incorrect data</p>
 
             <div class="mt-3 text-center">
                 <button class="btn btn-primary">로그인</button>
@@ -33,7 +33,6 @@
                 <button type="button" class="btn btn-primary" >카카오 로그인</button>
                 <button type="button" class="btn btn-primary" onClick="location.href='/register'">회원가입</button>
             </div>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
         </form>
     </div>
 </div>

@@ -1,6 +1,7 @@
 package com.shop.arinlee.global.config;
 
 import com.shop.arinlee.domain.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,13 +15,16 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    MemberService memberService;
+
+    private final MemberService memberService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
+        http.csrf().disable();
+
         http.formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
