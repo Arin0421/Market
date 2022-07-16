@@ -3,17 +3,16 @@ package com.shop.arinlee.web.register.dto;
 import com.shop.arinlee.domain.member.Entity.Member;
 import com.shop.arinlee.domain.member.Entity.Role;
 import com.shop.arinlee.domain.member.Entity.Type;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
 public class RegisterFormDto {
     @NotBlank(message = "이름은 필수 입력 값입니다.")
@@ -33,15 +32,24 @@ public class RegisterFormDto {
     @NotEmpty(message = "주소는 필수 입력 값입니다.")
     private String address;
 
-    public Member toEntity(){
+    public Member toEntity(PasswordEncoder passwordEncoder){
         return Member.builder()
                 .memberName(name)
                 .email(email)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .address(address)
                 .memberType(Type.BASE)
                 .role(Role.ADMIN)
                 .build();
+    }
+
+    @Builder
+    public RegisterFormDto(String name, String address, String email, String password, String password2) {
+        this.name = name;
+        this.address = address;
+        this.email = email;
+        this.password = password;
+        this.password2 = password2;
     }
 
 
