@@ -1,5 +1,6 @@
 package com.shop.arinlee.web.register.controller;
 
+import com.shop.arinlee.global.error.exception.BusinessException;
 import com.shop.arinlee.web.register.dto.RegisterFormDto;
 import com.shop.arinlee.web.register.service.RegisterService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class RegisterController {
         }
         try{
             registerService.registerMember(registerFormDto);
-        }catch (IllegalStateException e){
+        }catch (BusinessException e){
             e.printStackTrace();
             bindingResult.reject("errorMessage",e.getMessage());
             return "register/registerForm";
