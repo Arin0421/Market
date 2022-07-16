@@ -33,7 +33,7 @@ public class MemberRegisterTest {
         String password = "1234";
         String password2 = "1234";
         String address = "부천";
-        RegisterFormDto member = new RegisterFormDto(name,email,password,password2,address);
+        RegisterFormDto member = new RegisterFormDto(name,address,email,password,password2);
 
         //when
         registerService.registerMember(member);
