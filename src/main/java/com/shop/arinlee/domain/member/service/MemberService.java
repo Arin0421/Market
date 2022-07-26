@@ -2,6 +2,7 @@ package com.shop.arinlee.domain.member.service;
 
 import com.shop.arinlee.domain.member.Entity.Member;
 import com.shop.arinlee.domain.member.repository.MemberRepository;
+import com.shop.arinlee.global.config.UserDetailsImpl;
 import com.shop.arinlee.global.error.exception.BusinessException;
 import com.shop.arinlee.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -46,10 +47,6 @@ public class MemberService implements UserDetailsService {
             throw new UsernameNotFoundException(email);
         }
 
-        return User.builder()
-                .username(member.getEmail())
-                .password(member.getPassword())
-                .roles(member.getRole().toString())
-                .build();
+        return UserDetailsImpl.create(member);
     }
 }

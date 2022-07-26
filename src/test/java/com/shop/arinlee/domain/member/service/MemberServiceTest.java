@@ -34,7 +34,7 @@ class MemberServiceTest {
             .address("서울특별시")
             .password("password")
             .memberType(Type.BASE)
-            .role(Role.USER)
+            .role(Role.ADMIN)
             .build();
 
     @Test
