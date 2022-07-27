@@ -6,9 +6,9 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/root?serverTimezone=Asia/Seoul
-    username: arin
-    password: password
+    url: jdbc:mysql://localhost:3306/mall?serverTimezone=Asia/Seoul
+    username: root
+    password: rin123
 
   jpa:
     hibernate:
@@ -26,6 +26,18 @@ spring:
       max-file-size: 10MB # 파일 업로드 요청 시 하나의 파일 크기 10MB로 제한
       max-request-size: 100MB # 파일 업로드 요청 시 모든 파일의 크기의합 100MB로 제한
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_ID}
+            client-secret: ${GOOGLE_SECRET}
+            scope:
+              - email
+              - profile
+
 logging:
   level:
     org.hibernate.type: trace # sql binding 값 출력
+
