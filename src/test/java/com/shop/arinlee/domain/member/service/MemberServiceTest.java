@@ -60,4 +60,33 @@ class MemberServiceTest {
         //then
         assertThat(result).isEqualTo(member);
     }
+
+    @Test
+    public void 회원정보수정테스트_실패() throws Exception {
+        //given
+        doReturn(Optional.empty()).when(memberRepository).findByEmail(email);
+
+        //when
+        String changeAddress = "newAddress";
+        String changeName = "newName";
+        final BusinessException result = assertThrows(BusinessException.class, () -> target.update(email, changeName, changeAddress));
+
+        //then
+        assertThat(result.getMessage()).isEqualTo(ErrorCode.NO_MATCHING_MEMBER.getMessage());
+    }
+
+    @Test
+    public void 회원정보수정테스트_성공() throws Exception{
+        //given
+        doReturn(Optional.of(member)).when(memberRepository).findByEmail(email);
+
+        //when
+        String changeAddress = "newAddress";
+        String changeName = "newName";
+        Member result = target.update(email, changeName, changeAddress);
+
+        //then
+        assertThat(result.getMemberName()).isEqualTo(changeName);
+        assertThat(result.getAddress()).isEqualTo(changeAddress);
+    }
 }
