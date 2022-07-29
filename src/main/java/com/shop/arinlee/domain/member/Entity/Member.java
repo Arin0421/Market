@@ -22,7 +22,7 @@ public class Member {
     @Column(unique = true, nullable = false, length = 50)
     private String email;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String address;
 
     @Column(length = 200)
@@ -35,6 +35,12 @@ public class Member {
     @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private Type memberType;
+
+    public Member update(String memberName){
+        this.memberName = memberName;
+
+        return this;
+    }
 
 
     @Builder

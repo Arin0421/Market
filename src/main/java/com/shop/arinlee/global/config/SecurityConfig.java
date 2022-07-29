@@ -2,11 +2,12 @@ package com.shop.arinlee.global.config;
 
 import com.shop.arinlee.domain.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,12 +22,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthenticationFailureHandler loginFailureHandler;
     private final MemberService memberService;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.csrf().disable();
 
-        http.formLogin()
+        http.authorizeRequests()
+                .antMatchers("/login", "/register", "/").permitAll() //누구나 접근 가능
+                .antMatchers().hasRole("USER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
                 .loginPage("/login")
                 .defaultSuccessUrl("/")
                 .usernameParameter("email")
@@ -35,7 +43,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/")
-                ;
+                .and()
+                .oauth2Login()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService)
+                .and()
+                .permitAll()
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new AuthenticationEntryPointImpl());
     }
 
     @Bean
@@ -48,5 +64,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception{
         auth.userDetailsService(memberService)
                 .passwordEncoder(passwordEncoder());
+    }
+
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/css/**", "/js/**", "img/**")
+                .and().ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
 }
