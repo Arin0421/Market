@@ -30,4 +30,11 @@ public class ProfileService {
         String address = profileUpdateDto.getAddress();
         return memberService.update(email,memberName,address);
     }
+
+    public Member getMemberInfo(String email) {
+        if (memberService.findByEmail(email) == null){
+            throw new BusinessException(ErrorCode.NO_MATCHING_MEMBER);
+        }
+        return memberService.findByEmail(email);
+    }
 }
