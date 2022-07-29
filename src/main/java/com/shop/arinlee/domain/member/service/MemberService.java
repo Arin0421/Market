@@ -16,12 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
+    @Transactional
     public Member savedMember(Member member){
         validateDuplicateMember(member);
         return memberRepository.save(member);
@@ -48,5 +49,16 @@ public class MemberService implements UserDetailsService {
         }
 
         return UserDetailsImpl.create(member);
+    }
+
+    @Transactional
+    public Member update(String email, String memberName, String address) {
+        Member member = findByEmail(email);
+        if (member==null){
+            throw new BusinessException(ErrorCode.NO_MATCHING_MEMBER);
+        }
+        member.updateInfo(memberName, address);
+
+        return member;
     }
 }

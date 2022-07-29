@@ -53,4 +53,8 @@ public class Member {
         this.role = role;
     }
 
+    public void updateInfo(String memberName, String address) {
+        this.memberName = memberName;
+        this.address = address;
+    }
 }
