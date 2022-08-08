@@ -12,7 +12,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
 
     properties:
       hibernate:
@@ -40,4 +40,8 @@ spring:
 logging:
   level:
     org.hibernate.type: trace # sql binding 값 출력
+
+file:
+  upload:
+    path: C:/market/
 
