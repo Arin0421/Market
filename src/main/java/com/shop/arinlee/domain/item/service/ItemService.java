@@ -2,6 +2,8 @@ package com.shop.arinlee.domain.item.service;
 
 import com.shop.arinlee.domain.item.entity.Item;
 import com.shop.arinlee.domain.item.repository.ItemRepository;
+import com.shop.arinlee.global.error.exception.BusinessException;
+import com.shop.arinlee.global.error.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,4 +19,11 @@ public class ItemService {
     public Item saveItem(Item item) {
         return itemRepository.save(item);
     }
+
+    public Item findItemById(Long itemId) {
+
+        return itemRepository.findById(itemId)
+                .orElseThrow(() -> new BusinessException(ErrorCode.NO_MATCHING_ITEM));
+    }
+
 }
