@@ -15,7 +15,7 @@ import java.util.List;
 @Setter
 @ToString
 @NoArgsConstructor
-public class AdminItemDto {
+public class RegisterItemDto {
 
     @NotBlank(message = "상품명은 필수 입력 값입니다.")
     private String itemName;
@@ -34,7 +34,7 @@ public class AdminItemDto {
     private List<MultipartFile> itemImageFiles;
 
     @Builder
-    public AdminItemDto(String itemName, Integer price, String itemDetail, Integer stockNumber, ItemSellStatus itemSellStatus, List<MultipartFile> itemImageFiles) {
+    public RegisterItemDto(String itemName, Integer price, String itemDetail, Integer stockNumber, ItemSellStatus itemSellStatus, List<MultipartFile> itemImageFiles) {
         this.itemName = itemName;
         this.price = price;
         this.itemDetail = itemDetail;
