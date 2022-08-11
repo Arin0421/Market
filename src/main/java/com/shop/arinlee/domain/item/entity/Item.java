@@ -45,4 +45,12 @@ public class Item {
         this.itemDetail = itemDetail;
         this.member = member;
     }
+
+    public void update(Item updateItem) {
+        this.itemName = updateItem.itemName;
+        this.itemSellStatus = updateItem.itemSellStatus;
+        this.price = updateItem.price;
+        this.stockNumber = updateItem.stockNumber;
+        this.itemDetail = updateItem.itemDetail;
+    }
 }
