@@ -1,16 +1,14 @@
 package com.shop.arinlee.web.adminItem.controller;
 
 import com.shop.arinlee.global.error.exception.ErrorCode;
-import com.shop.arinlee.web.adminItem.dto.AdminItemDto;
+import com.shop.arinlee.web.adminItem.dto.RegisterItemDto;
+import com.shop.arinlee.web.adminItem.dto.UpdateItemDto;
 import com.shop.arinlee.web.adminItem.service.AdminItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
@@ -25,14 +23,14 @@ public class AdminItemController {
 
     @GetMapping("/new")
     public String getAdminItemView(Model model) {
-        model.addAttribute("adminItemDto", new AdminItemDto());
+        model.addAttribute("adminItemDto", new RegisterItemDto());
         return "adminitem/registeritemform";
     }
 
     @PostMapping(value = "/new")
     public String itemNew(
             Principal principal,
-            @Valid @ModelAttribute AdminItemDto adminItemDto,
+            @Valid @ModelAttribute RegisterItemDto adminItemDto,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes
     ) {
@@ -54,5 +52,15 @@ public class AdminItemController {
         }
 
         return "redirect:/admin/items/{itemId}";
+    }
+
+    @GetMapping("/{itemId}")
+    public String itemEdit(
+            @PathVariable Long itemId,
+            Model model
+    ) {
+        UpdateItemDto updateItemDto = adminItemService.getItemAndImages(itemId);
+        model.addAttribute("updateItemDto", updateItemDto);
+        return "adminitem/updateitemform";
     }
 }
