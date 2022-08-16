@@ -1,9 +1,11 @@
 package com.shop.arinlee.domain.item.entity;
 
+import com.shop.arinlee.domain.ItemImage.entity.ItemImage;
 import com.shop.arinlee.domain.member.Entity.Member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table
@@ -35,6 +37,9 @@ public class Item {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="member_id",nullable = false)
     private Member member;
+
+    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ItemImage> imageList;
 
     @Builder
     public Item(String itemName, ItemSellStatus itemSellStatus, int price, int stockNumber, String itemDetail, Member member) {
