@@ -4,7 +4,11 @@ import com.shop.arinlee.domain.item.entity.Item;
 import com.shop.arinlee.domain.item.repository.ItemRepository;
 import com.shop.arinlee.global.error.exception.BusinessException;
 import com.shop.arinlee.global.error.exception.ErrorCode;
+import com.shop.arinlee.web.main.dto.ItemSearchDto;
+import com.shop.arinlee.web.main.dto.MainItemDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,5 +35,10 @@ public class ItemService {
         Item item = findItemById(itemId);
         item.update(updateItem);
         return item;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
+        return itemRepository.getMainItemPage(itemSearchDto, pageable);
     }
 }
