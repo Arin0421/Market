@@ -58,4 +58,12 @@ public class Item {
         this.stockNumber = updateItem.stockNumber;
         this.itemDetail = updateItem.itemDetail;
     }
+
+    public void reduceStock(int amount) {
+        this.stockNumber -= amount;
+
+        if (this.stockNumber == 0) {
+            this.itemSellStatus = ItemSellStatus.SOLD_OUT;
+        }
+    }
 }
