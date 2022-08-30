@@ -42,10 +42,11 @@ public class ItemService {
         return itemRepository.getMainItemPage(itemSearchDto, pageable);
     }
 
+    @Transactional
     public void reduceStock(Item item, int amount) throws Exception {
         int stock = item.getStockNumber();
         if (stock < amount) {
-            throw new Exception(ErrorCode.OUT_OF_STOCK.getMessage() + "(현재 재고 수량" + item.getStockNumber() + ")");
+            throw new Exception(ErrorCode.NOT_ENOUGH_STOCK.getMessage() + "(현재 재고 수량" + item.getStockNumber() + ")");
         }
 
         item.reduceStock(amount);
