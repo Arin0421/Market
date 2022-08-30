@@ -1,6 +1,7 @@
 package com.shop.arinlee.domain.item.entity;
 
 import com.shop.arinlee.domain.ItemImage.entity.ItemImage;
+import com.shop.arinlee.domain.base.BaseEntity;
 import com.shop.arinlee.domain.member.Entity.Member;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Table
 @Getter
 @NoArgsConstructor
-public class Item {
+public class Item extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
