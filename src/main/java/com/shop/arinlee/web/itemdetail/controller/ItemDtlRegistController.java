@@ -19,7 +19,7 @@ public class ItemDtlRegistController {
     private final ItemDtlService itemDtlService;
 
     @PostMapping("/order")
-    public ResponseEntity registerOrderItem(@RequestBody RegisterOrderDto registerOrderDto, Principal principal) throws Exception {
+    public ResponseEntity registerOrderItem(@RequestBody RegisterOrderDto registerOrderDto, Principal principal) {
         itemDtlService.registerOrderItem(registerOrderDto, principal);
 
         return new ResponseEntity<>(HttpStatus.OK);
