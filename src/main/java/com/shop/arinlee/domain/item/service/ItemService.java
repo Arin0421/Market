@@ -4,6 +4,7 @@ import com.shop.arinlee.domain.item.entity.Item;
 import com.shop.arinlee.domain.item.repository.ItemRepository;
 import com.shop.arinlee.global.error.exception.BusinessException;
 import com.shop.arinlee.global.error.exception.ErrorCode;
+import com.shop.arinlee.global.error.exception.StockException;
 import com.shop.arinlee.web.main.dto.ItemSearchDto;
 import com.shop.arinlee.web.main.dto.MainItemDto;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +47,7 @@ public class ItemService {
     public void reduceStock(Item item, int amount) throws Exception {
         int stock = item.getStockNumber();
         if (stock < amount) {
-            throw new Exception(ErrorCode.NOT_ENOUGH_STOCK.getMessage() + "(현재 재고 수량" + item.getStockNumber() + ")");
+            throw new StockException(item.getStockNumber());
         }
 
         item.reduceStock(amount);
