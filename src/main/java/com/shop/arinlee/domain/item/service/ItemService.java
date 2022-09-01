@@ -4,6 +4,7 @@ import com.shop.arinlee.domain.item.entity.Item;
 import com.shop.arinlee.domain.item.repository.ItemRepository;
 import com.shop.arinlee.global.error.exception.BusinessException;
 import com.shop.arinlee.global.error.exception.ErrorCode;
+import com.shop.arinlee.global.error.exception.StockException;
 import com.shop.arinlee.web.main.dto.ItemSearchDto;
 import com.shop.arinlee.web.main.dto.MainItemDto;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,15 @@ public class ItemService {
     @Transactional(readOnly = true)
     public Page<MainItemDto> getMainItemPage(ItemSearchDto itemSearchDto, Pageable pageable){
         return itemRepository.getMainItemPage(itemSearchDto, pageable);
+    }
+
+    @Transactional
+    public void reduceStock(Item item, int amount) {
+        int stock = item.getStockNumber();
+        if (stock < amount) {
+            throw new StockException(item.getStockNumber());
+        }
+
+        item.reduceStock(amount);
     }
 }

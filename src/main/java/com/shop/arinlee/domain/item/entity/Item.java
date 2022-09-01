@@ -1,6 +1,7 @@
 package com.shop.arinlee.domain.item.entity;
 
 import com.shop.arinlee.domain.ItemImage.entity.ItemImage;
+import com.shop.arinlee.domain.base.BaseEntity;
 import com.shop.arinlee.domain.member.Entity.Member;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @Table
 @Getter
 @NoArgsConstructor
-public class Item {
+public class Item extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,5 +58,13 @@ public class Item {
         this.price = updateItem.price;
         this.stockNumber = updateItem.stockNumber;
         this.itemDetail = updateItem.itemDetail;
+    }
+
+    public void reduceStock(int amount) {
+        this.stockNumber -= amount;
+
+        if (this.stockNumber == 0) {
+            this.itemSellStatus = ItemSellStatus.SOLD_OUT;
+        }
     }
 }
