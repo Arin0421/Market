@@ -59,10 +59,10 @@
         <div class="d-flex mb-3 align-self-center">
             <h4 th:text="|${#temporals.format(order.orderTime, 'yyyy-MM-dd HH:mm:ss')} 주문|"></h4>
             <div class="ms-3">
-                <th:block th:if="${order.orderStatus == T(com.project.market.domain.order.constant.OrderStatus).ORDER}">
+                <th:block th:if="${order.orderStatus == T(com.shop.arinlee.domain.order.entity.OrderStatus).ORDER}">
                     <button type="button" class="btn btn-outline-secondary" th:value="${order.orderId}" onclick="cancelOrder(this.value)">주문취소</button>
                 </th:block>
-                <th:block th:unless="${order.orderStatus == T(com.project.market.domain.order.constant.OrderStatus).ORDER}">
+                <th:block th:unless="${order.orderStatus == T(com.shop.arinlee.domain.order.entity.OrderStatus).ORDER}">
                     <h4>(취소 완료)</h4>
                 </th:block>
             </div>
